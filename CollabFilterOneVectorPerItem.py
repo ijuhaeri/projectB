@@ -88,8 +88,9 @@ class CollabFilterOneVectorPerItem(AbstractBaseCollabFilterSGD):
         print(c_per_item.size)
         print(U.size)
         print(V.size)
+        
+        yhat_N = mu + b_per_user[user_id_N] + c_per_item[item_id_N] + ag_np.dot(U[user_id_N].flatten(), V[item_id_N].flatten())
 
-        yhat_N = mu + b_per_user + c_per_item + ag_np.dot(ag_np.transpose(U), V)
         return yhat_N
 
 
@@ -112,7 +113,7 @@ class CollabFilterOneVectorPerItem(AbstractBaseCollabFilterSGD):
         # TIP: use self.alpha to access regularization strength
         y_N = data_tuple[2]
         yhat_N = self.predict(data_tuple[0], data_tuple[1], **param_dict)
-        loss_total = self.alpha * (ag_np.dot(param_dict.V) + ag_np.dot(param_dict.U)) + ag_np.square(y_N - yhat_N)
+        loss_total = self.alpha * (ag_np.sum(param_dict["V"]**2) + ag_np.sum(param_dict["U"]**2)) + ag_np.sum(ag_np.square(y_N - yhat_N))
         return loss_total    
 
 
