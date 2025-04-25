@@ -38,7 +38,7 @@ def load_train_valid_test_datasets(
     ## Load the development set
     try:
         all_df = pd.read_csv(
-            os.path.join(data_path, "ratings_all_development_set.csv"))
+            os.path.join('data_movie_lens_100k/', "ratings_all_development_set.csv"))
     except IOError:
         # Just in case, in case directory is wrong, one less deep
         all_df = pd.read_csv(
@@ -80,5 +80,4 @@ def load_train_valid_test_datasets(
 
     return (
         train_data_tuple, valid_data_tuple, test_data_tuple,
-        total_n_users, total_n_items)
-
+        total_n_users, total_n_items, train_rows, valid_rows, test_rows)
