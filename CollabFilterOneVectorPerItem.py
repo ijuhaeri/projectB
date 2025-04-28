@@ -54,7 +54,7 @@ class CollabFilterOneVectorPerItem(AbstractBaseCollabFilterSGD):
         # TODO fix the lines below to have right dimensionality & values
         # TIP: use self.n_factors to access number of hidden dimensions
         self.param_dict = dict(
-            mu=ag_np.mean(train_tuple[2]), # FIX dimensionality
+            mu=ag_np.ones(1), # FIX dimensionality
             b_per_user=ag_np.ones(n_users), # FIX dimensionality
             c_per_item=ag_np.ones(n_items), # FIX dimensionality
             U=0.001 * random_state.randn(n_users, self.n_factors), # FIX dimensionality
@@ -88,8 +88,10 @@ class CollabFilterOneVectorPerItem(AbstractBaseCollabFilterSGD):
         # print(c_per_item.size)
         # print(U.size)
         # print(V.size)
+        user_id_N = user_id_N.astype(int)
+        item_id_N = item_id_N.astype(int)
         
-        yhat_N = mu + b_per_user[user_id_N] + c_per_item[item_id_N] + ag_np.sum(ag_np.prod(U[user_id_N], V[item_id_N], axis=1))
+        yhat_N = mu + b_per_user[user_id_N] + c_per_item[item_id_N] + ag_np.sum(U[user_id_N] * V[item_id_N], axis=1)
 
         return yhat_N
 

@@ -241,7 +241,7 @@ class AbstractBaseCollabFilterSGD(object):
                     #     epoch, loss if epoch <= 2 else smooth_loss,
                     #     train_perf_dict['rmse'], valid_perf_dict['rmse'],
                     #     avg_grad_norm_str))
-
+                    
                 ## Update each parameter by taking step in direction of gradient
                 epoch += n_per_batch / n_total 
                 for key, arr in self.param_dict.items():
